@@ -34,18 +34,19 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/migasDePan"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Grupo"
-        android:id="@+id/tvNombreGrupo"
-        android:clickable="true"
-        android:background="@color/ripple_material_light"
-        android:textStyle="bold"/>
+        android:minHeight="30dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lvProductos"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:headerDividersEnabled="true"/>
 
 </LinearLayout>

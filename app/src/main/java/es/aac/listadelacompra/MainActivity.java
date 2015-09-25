@@ -1,45 +1,54 @@
 package es.aac.listadelacompra;
 
-import android.support.v7.app.AppCompatActivity;
+import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
+import java.util.Stack;
+
+import es.aac.listadelacompra.entidades.Producto;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProductoAdapter adaptador;
+    View.OnClickListener listenerMigaDePan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tvNombreGrupo = (TextView) findViewById(R.id.tvNombreGrupo);
-        ListView listado = (ListView) findViewById(R.id.lvProductos);
+        final ListView listado = (ListView) findViewById(R.id.lvProductos);
+        final LinearLayout migasDePan = (LinearLayout) findViewById(R.id.migasDePan);
+        final listaProductosAdapter adaptador = new listaProductosAdapter(this, R.layout.producto_adapter);
+        ListaCompraApplication app = (ListaCompraApplication) this.getApplicationContext();
 
-        tvNombreGrupo.setOnClickListener(new View.OnClickListener() {
+        listenerMigaDePan = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Producto producto = (Producto)v.getTag();
-                Producto padre = producto.getGrupoPadre();
-                if( padre != null ) {
-                    Toast.makeText(MainActivity.this, padre.getNombre(), Toast.LENGTH_SHORT).show();
-
-                    List<Producto> listaProductos;
-                    listaProductos = padre.getSubGrupos();
-                    adaptador.setListaProductos(listaProductos);
+                Producto p = (Producto) v.getTag();
+                if (p != null) {
+                    adaptador.setListaProductos(p);
                 }
+            }
+        };
+
+        adaptador.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                //Toast.makeText(MainActivity.this, this.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Producto p = adaptador.getGrupoListaProductos();
+                actualizaMigasDePan(migasDePan, p);
             }
         });
 
-        ListaCompraApplication app = (ListaCompraApplication) this.getApplicationContext();
-        adaptador = new ProductoAdapter(this, R.layout.producto_adapter, app.getListaProductos(), tvNombreGrupo);
+        adaptador.setListaProductos(app.getListaProductos());
         listado.setAdapter(adaptador);
     }
 
@@ -63,5 +72,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void actualizaMigasDePan(LinearLayout migasDePan, Producto producto) {
+
+        Stack<Producto> pila = new Stack<>();
+        migasDePan.removeAllViews();
+
+        do {
+            pila.add(producto);
+            producto = producto.getProductoPadre();
+        } while (producto != null);
+
+        while (!pila.empty()) {
+            producto = pila.pop();
+            TextView t = new TextView(this);
+            t.setPadding(0, 10, 10, 10);
+            t.setText(producto.getNombre() + " >");
+            t.setTag(producto);
+            t.setOnClickListener(listenerMigaDePan);
+            migasDePan.addView(t);
+        }
     }
 }

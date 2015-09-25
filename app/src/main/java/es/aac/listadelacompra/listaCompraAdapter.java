@@ -6,33 +6,54 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
+import es.aac.listadelacompra.entidades.Producto;
+
 /**
- * Created by manana on 17/09/15.
+ * Created by manana on 25/09/15.
  */
-public class ProductoAdapter extends BaseAdapter {
+public class listaCompraAdapter extends BaseAdapter {
 
     private Context contexto;
     private int layout;
-    private List<Producto> listaProductos;
-    private DesplegarGrupoListener desplegarGrupoListener;
-    private TextView tvNombreGrupo;
+    private List<Producto> listaProductos; // Lista de productos que mostrará el ListView
+    private Producto grupoListaProductos;  // Grupo al que pertenece la lista de productos (producto padre)
+    private View.OnClickListener desplegarGrupoListener;
+    private CheckBox.OnCheckedChangeListener seleccionaProdcutoListener;
 
-    public ProductoAdapter(Context contexto, int layout, List<Producto> listaProductos, TextView tvNombreGrupo) {
-        this.listaProductos = listaProductos;
+    public listaCompraAdapter(Context contexto, int layout) {
         this.contexto = contexto;
         this.layout = layout;
-        this.tvNombreGrupo = tvNombreGrupo;
-        desplegarGrupoListener = new DesplegarGrupoListener();
+
+        desplegarGrupoListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductoAdapterDecorator productoAdapterDecorator = (ProductoAdapterDecorator) ((View) v.getParent()).getTag();
+                setListaProductos(productoAdapterDecorator.producto);
+            }
+        };
+
+        seleccionaProdcutoListener = new CheckBox.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ProductoAdapterDecorator productoAdapterDecorator = (ProductoAdapterDecorator) ((View) buttonView.getParent()).getTag();
+                productoAdapterDecorator.producto.setSeleccionado(isChecked);
+            }
+        };
     }
 
-    public void setListaProductos(List<Producto> listaProductos) {
-        this.listaProductos = listaProductos;
+    public void setListaProductos(Producto grupoProductos) {
+        this.grupoListaProductos = grupoProductos;
+        this.listaProductos = grupoProductos.getGrupoSubProductos().getLista();
         notifyDataSetChanged();
+    }
+
+    public Producto getGrupoListaProductos() {
+        return grupoListaProductos;
     }
 
     @Override
@@ -66,6 +87,7 @@ public class ProductoAdapter extends BaseAdapter {
             productoAdapterDecorator.ivSubGrupos = (ImageView) convertView.findViewById(R.id.ivSubGrupos);
             convertView.setTag(productoAdapterDecorator);
 
+            productoAdapterDecorator.cbProducto.setOnCheckedChangeListener(seleccionaProdcutoListener);
             productoAdapterDecorator.ivSubGrupos.setOnClickListener(desplegarGrupoListener);
         }
 
@@ -74,8 +96,8 @@ public class ProductoAdapter extends BaseAdapter {
         convertView.setTag(productoAdapterDecorator);
 
         productoAdapterDecorator.cbProducto.setText(producto.getNombre());
+        productoAdapterDecorator.cbProducto.setChecked(producto.getSeleccionado());
         productoAdapterDecorator.ivSubGrupos.setVisibility(producto.tieneSubgrupos() ? View.VISIBLE : View.INVISIBLE);
-
 
         return convertView;
     }
@@ -86,19 +108,5 @@ public class ProductoAdapter extends BaseAdapter {
         Producto producto;
         CheckBox cbProducto;
         ImageView ivSubGrupos;
-    }
-
-
-    // Clase para el listener sobre el icono de desplegar un grupo
-    private class DesplegarGrupoListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            ProductoAdapterDecorator productoAdapterDecorator = (ProductoAdapterDecorator) ((View) v.getParent()).getTag();
-
-            tvNombreGrupo.setText(productoAdapterDecorator.producto.getNombre());
-            tvNombreGrupo.setTag(productoAdapterDecorator.producto);
-            setListaProductos(productoAdapterDecorator.producto.getSubGrupos());
-        }
     }
 }

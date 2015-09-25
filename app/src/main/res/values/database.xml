@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="createProductos">
+        CREATE TABLE "productos" (
+            "id"	    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	        "nombre"	TEXT NOT NULL,
+	        "id_padre"	INTEGER NOT NULL)
+    </string>
+
+    <string-array name="scriptCreacion">
+        <item>@string/createProductos</item>
+    </string-array>
+
+    <string-array name="insertProductos">
+
+        <item>INSERT INTO productos VALUES(1000, \"Carnes\", 0)</item>
+
+        <item>INSERT INTO productos VALUES(1100, \"Vacuno\", 1000)</item>
+        <item>INSERT INTO productos VALUES(1101, \"Entrecot\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1102, \"Solomillo\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1103, \"Carne picada\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1104, \"Chuletón\", 1100)</item>
+
+        <item>INSERT INTO productos VALUES(1200, \"Cerdo\", 1000)</item>
+        <item>INSERT INTO productos VALUES(1201, \"Cinta de lomo adobada\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1202, \"Cinta de lomo fresca\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1203, \"Solomillo\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1204, \"Chuletas\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1205, \"Costillas\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1206, \"Secreto\", 1200)</item>
+
+        <item>INSERT INTO productos VALUES(1300, \"Cordero\", 1000)</item>
+        <item>INSERT INTO productos VALUES(1301, \"Chuletas\", 1300)</item>
+        <item>INSERT INTO productos VALUES(1302, \"Pierna\", 1300)</item>
+        <item>INSERT INTO productos VALUES(1303, \"Paletilla\", 1300)</item>
+
+        <item>INSERT INTO productos VALUES(1400, \"Pollo\", 1000)</item>
+        <item>INSERT INTO productos VALUES(1401, \"Pollo entero\", 1400)</item>
+        <item>INSERT INTO productos VALUES(1402, \"Muslos\", 1400)</item>
+        <item>INSERT INTO productos VALUES(1403, \"Alitas\", 1400)</item>
+        <item>INSERT INTO productos VALUES(1404, \"Filete\", 1400)</item>
+
+
+        <item>INSERT INTO productos VALUES(2000, \"Pescados\", 0)</item>
+
+        <item>INSERT INTO productos VALUES(2010, \"Bacalao\", 2000)</item>
+        <item>INSERT INTO productos VALUES(2020, \"Merluza\", 2000)</item>
+        <item>INSERT INTO productos VALUES(2030, \"Lenguado\", 2000)</item>
+        <item>INSERT INTO productos VALUES(2040, \"Lubina\", 2000)</item>
+
+
+        <item>INSERT INTO productos VALUES(3000, \"Frutas\", 0)</item>
+
+        <item>INSERT INTO productos VALUES(3001, \"Naranja\", 3000)</item>
+        <item>INSERT INTO productos VALUES(3002, \"Manzana\", 3000)</item>
+        <item>INSERT INTO productos VALUES(3003, \"Pera\", 3000)</item>
+        <item>INSERT INTO productos VALUES(3004, \"Melocotón\", 3000)</item>
+
+
+        <item>INSERT INTO productos VALUES(4000, \"Verduras\", 0)</item>
+
+        <item>INSERT INTO productos VALUES(4001, \"Berenjena\", 4000)</item>
+        <item>INSERT INTO productos VALUES(4002, \"Calabacín\", 4000)</item>
+        <item>INSERT INTO productos VALUES(4003, \"Lechuga\", 4000)</item>
+        <item>INSERT INTO productos VALUES(4004, \"Coliflor\", 4000)</item>
+
+        <item>INSERT INTO productos VALUES(10000, \"Varios\", 0)</item>
+
+    </string-array>
+
+</resources>
