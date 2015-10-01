@@ -30,7 +30,7 @@ public class ProductoDaoSqlite implements ProductoDao {
         ContentValues cv = new ContentValues();
         cv.put(CAMPO_ID, producto.getId());
         cv.put(CAMPO_NOMBRE, producto.getNombre());
-        cv.put(CAMPO_ID_PADRE, producto.getProductoPadre().getId());
+        cv.put(CAMPO_ID_PADRE, producto.getIdPadre());
         return cv;
     }
 
@@ -60,12 +60,10 @@ public class ProductoDaoSqlite implements ProductoDao {
         return db.update(TABLA, getContentValues(producto), CAMPO_ID + "=?", args);
     }
 
-    @Override
-    public Producto GetListaProductos() {
+    public GrupoProductos GetListaProductos() {
 
         GrupoProductos listadoBd = new GrupoProductos();
-        Producto lista = new Producto(0, "Productos", 0);
-        listadoBd.add(lista);
+        GrupoProductos lista = new GrupoProductos("Productos básicos");
 
         Cursor cursor = db.query(TABLA, null, null, null, null, null, null);
 
@@ -81,19 +79,24 @@ public class ProductoDaoSqlite implements ProductoDao {
 
         for (TreeMap.Entry<Integer, Producto> item : listadoBd.entrySet()) {
             Producto p = item.getValue();
-            generaArbolProductos(p, listadoBd);
+            generaArbolProductos(lista, p, listadoBd);
         }
 
         return lista;
     }
 
-    private void generaArbolProductos(Producto p, GrupoProductos lista) {
+    private void generaArbolProductos(GrupoProductos raiz, Producto p, GrupoProductos lista) {
 
-        if (p != null && p.getIdPadre() != p.getId() && lista.containsKey(p.getIdPadre())) {
-
-            Producto padre = lista.get(p.getIdPadre());
-            generaArbolProductos(padre, lista);
-            padre.addSubProducto(p);
+        if (p != null) {
+            if (p.getIdPadre() != 0) {
+                if (p.getIdPadre() != p.getId() && lista.containsKey(p.getIdPadre())) {
+                    Producto padre = lista.get(p.getIdPadre());
+                    generaArbolProductos(raiz, padre, lista);
+                    padre.addSubProducto(p);
+                }
+            } else {
+                raiz.add(p);
+            }
         }
     }
 }

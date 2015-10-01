@@ -17,29 +17,30 @@
         <item>INSERT INTO productos VALUES(1000, \"Carnes\", 0)</item>
 
         <item>INSERT INTO productos VALUES(1100, \"Vacuno\", 1000)</item>
-        <item>INSERT INTO productos VALUES(1101, \"Entrecot\", 1100)</item>
-        <item>INSERT INTO productos VALUES(1102, \"Solomillo\", 1100)</item>
-        <item>INSERT INTO productos VALUES(1103, \"Carne picada\", 1100)</item>
-        <item>INSERT INTO productos VALUES(1104, \"Chuletón\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1101, \"Entrecot de ternera\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1102, \"Solomillo de ternera\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1103, \"Carne picada de ternera\", 1100)</item>
+        <item>INSERT INTO productos VALUES(1104, \"Chuletón de ternera\", 1100)</item>
 
         <item>INSERT INTO productos VALUES(1200, \"Cerdo\", 1000)</item>
         <item>INSERT INTO productos VALUES(1201, \"Cinta de lomo adobada\", 1200)</item>
         <item>INSERT INTO productos VALUES(1202, \"Cinta de lomo fresca\", 1200)</item>
-        <item>INSERT INTO productos VALUES(1203, \"Solomillo\", 1200)</item>
-        <item>INSERT INTO productos VALUES(1204, \"Chuletas\", 1200)</item>
-        <item>INSERT INTO productos VALUES(1205, \"Costillas\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1203, \"Solomillo de cerdo\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1204, \"Chuletas de cerdo\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1205, \"Costillas de cerdo\", 1200)</item>
         <item>INSERT INTO productos VALUES(1206, \"Secreto\", 1200)</item>
+        <item>INSERT INTO productos VALUES(1103, \"Carne picada de cerdo\", 1100)</item>
 
         <item>INSERT INTO productos VALUES(1300, \"Cordero\", 1000)</item>
-        <item>INSERT INTO productos VALUES(1301, \"Chuletas\", 1300)</item>
-        <item>INSERT INTO productos VALUES(1302, \"Pierna\", 1300)</item>
-        <item>INSERT INTO productos VALUES(1303, \"Paletilla\", 1300)</item>
+        <item>INSERT INTO productos VALUES(1301, \"Chuletasde cordero\", 1300)</item>
+        <item>INSERT INTO productos VALUES(1302, \"Pierna de cordero\", 1300)</item>
+        <item>INSERT INTO productos VALUES(1303, \"Paletilla de cordero\", 1300)</item>
 
         <item>INSERT INTO productos VALUES(1400, \"Pollo\", 1000)</item>
         <item>INSERT INTO productos VALUES(1401, \"Pollo entero\", 1400)</item>
-        <item>INSERT INTO productos VALUES(1402, \"Muslos\", 1400)</item>
-        <item>INSERT INTO productos VALUES(1403, \"Alitas\", 1400)</item>
-        <item>INSERT INTO productos VALUES(1404, \"Filete\", 1400)</item>
+        <item>INSERT INTO productos VALUES(1402, \"Muslos de pollo\", 1400)</item>
+        <item>INSERT INTO productos VALUES(1403, \"Alitas de pollo\", 1400)</item>
+        <item>INSERT INTO productos VALUES(1404, \"Filete de pollo\", 1400)</item>
 
 
         <item>INSERT INTO productos VALUES(2000, \"Pescados\", 0)</item>

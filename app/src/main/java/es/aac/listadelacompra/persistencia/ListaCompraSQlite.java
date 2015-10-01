@@ -35,10 +35,6 @@ public class ListaCompraSQlite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         ejecutarScript(db, context.getResources().getStringArray(R.array.scriptCreacion));
-        /*String[] s = {
-                "INSERT INTO productos VALUES(1001, 'Carnes', 1)",
-                "INSERT INTO productos VALUES(1100, 'Vacuno', 1000)"
-        };*/
         ejecutarScript(db, context.getResources().getStringArray(R.array.insertProductos));
     }
 

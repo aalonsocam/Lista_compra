@@ -17,10 +17,13 @@ import java.util.Stack;
 import es.aac.listadelacompra.ListaCompraApplication;
 import es.aac.listadelacompra.ListaProductosAdapter;
 import es.aac.listadelacompra.R;
+import es.aac.listadelacompra.entidades.EstadoProductoObserver;
 import es.aac.listadelacompra.entidades.GrupoProductos;
+import es.aac.listadelacompra.entidades.Producto;
 
 public class Productos extends Fragment {
 
+    private ListaCompraApplication app;
     private View.OnClickListener listenerMigaDePan;
 
     @Override
@@ -40,14 +43,15 @@ public class Productos extends Fragment {
         final ListView listado = (ListView) view.findViewById(R.id.lvProductos);
         final LinearLayout migasDePan = (LinearLayout) view.findViewById(R.id.migasDePan);
         final ListaProductosAdapter adaptador = new ListaProductosAdapter(activity, R.layout.producto_adapter);
-        ListaCompraApplication app = (ListaCompraApplication) activity.getApplicationContext();
+
+        app = (ListaCompraApplication) activity.getApplicationContext();
 
         listenerMigaDePan = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GrupoProductos g = (GrupoProductos) v.getTag();
                 if (g != null)
-                    adaptador.setListaProductos(g);
+                    adaptador.setGrupoProductos(g);
             }
         };
 
@@ -55,12 +59,20 @@ public class Productos extends Fragment {
             @Override
             public void onChanged() {
                 super.onChanged();
-                GrupoProductos g = adaptador.getGrupoListaProductos();
+                GrupoProductos g = adaptador.getGrupoProductos();
                 actualizaMigasDePan(migasDePan, g);
             }
         });
 
-        adaptador.setListaProductos(app.getListaProductos());
+        adaptador.registerEstadoProductoObserver(new EstadoProductoObserver() {
+            @Override
+            public void EstadoChanged(Producto p) {
+                //Toast.makeText(getContext(), p.toString(), Toast.LENGTH_LONG).show();
+                app.addProductoLista(p);
+            }
+        });
+
+        adaptador.setGrupoProductos(app.getListaProductos());
         listado.setAdapter(adaptador);
 
         return view;

@@ -10,8 +10,8 @@ public class Producto implements Comparable<Producto> {
     private int id;
     private String nombre;
     private int idPadre;
-    private Producto productoPadre;
-    private Producto productoPrincipal;
+    private GrupoProductos grupoPrincipal;
+    private GrupoProductos grupoPadre;
     private GrupoProductos grupoSubProductos;
     private Boolean seleccionado;
     private Boolean comprado;
@@ -20,7 +20,7 @@ public class Producto implements Comparable<Producto> {
         this.id = id;
         this.nombre = nombre;
         this.idPadre = idPadre;
-        grupoSubProductos = new GrupoProductos();
+        grupoSubProductos = new GrupoProductos(this);
         seleccionado = false;
         comprado = false;
     }
@@ -37,12 +37,16 @@ public class Producto implements Comparable<Producto> {
         return idPadre;
     }
 
-    public Producto getProductoPadre() {
-        return productoPadre;
+    public GrupoProductos getGrupoPadre() {
+        return grupoPadre;
     }
 
-    public Producto getProductoPrincipal() {
-        return productoPrincipal;
+    public void setGrupoPadre(GrupoProductos grupoPadre) {
+        this.grupoPadre = grupoPadre;
+    }
+
+    public GrupoProductos getGrupoPrincipal() {
+        return grupoPrincipal;
     }
 
     public GrupoProductos getGrupoSubProductos() {
@@ -68,9 +72,9 @@ public class Producto implements Comparable<Producto> {
     public void addSubProducto(Producto producto) {
         if (grupoSubProductos.containsKey(producto.getId()) == false) {
             producto.idPadre = id;
-            producto.productoPadre = this;
-            producto.productoPrincipal = productoPrincipal != null ? productoPrincipal : producto;
-            grupoSubProductos.put(producto.getId(), producto);
+            producto.grupoPadre = this.grupoSubProductos;
+            producto.grupoPrincipal = grupoPrincipal != null ? grupoPrincipal : grupoSubProductos;
+            grupoSubProductos.add(producto);
         }
     }
 
@@ -93,11 +97,11 @@ public class Producto implements Comparable<Producto> {
                 "id=" + id +
                 ", nombre='" + nombre + '\'';
 
-        if (productoPadre != null)
-            ret += ", productoPadre=" + productoPadre.getNombre();
+        if (grupoPadre != null)
+            ret += ", Padre=" + grupoPadre.getNombre();
 
-        if (productoPrincipal != null)
-            ret += ", productoPrincipal=" + productoPrincipal.getNombre();
+        if (grupoPrincipal != null)
+            ret += ", Principal=" + grupoPrincipal.getNombre();
 
         ret += '}';
 
